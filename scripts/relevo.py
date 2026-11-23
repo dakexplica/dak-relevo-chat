@@ -168,7 +168,8 @@ def peso(carpeta):
     veces = round(actual / inicial, 1) if inicial else None
     print(f"PESO: cada vez que respondo (o doy un paso) vuelvo a leer todo el chat: {comun.miles(actual)} tokens"
           + (f"; se ha compactado {comp} {'vez' if comp == 1 else 'veces'}" if comp else "") + ".")
-    print(f"TOTAL: en este chat ya llevo {comun.miles(comun.total_leido(chat['transcript']))} tokens leídos.")
+    total = comun.miles(comun.total_leido(chat["transcript"]))
+    print(f"TOTAL: en este chat ya llevo {total} {'de tokens' if 'millones' in total else 'tokens'} leídos.")
     if inicial:
         print(f"NUEVO: uno nuevo arranca con {comun.miles(inicial)} (lo de base) + la nota: "
               f"unas {veces} veces menos por paso.")
