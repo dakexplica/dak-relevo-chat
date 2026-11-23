@@ -1,5 +1,9 @@
 # Qué cambió
 
+## 1.0.2
+- Mide tu chat desde el primer momento, aunque los avisos se acaben de instalar.
+- Si tu chat todavía está ligero (por ejemplo, al hacer la guía en un chat nuevo), te lo dice tal cual y te enseña un ejemplo real de uno pesado.
+
 ## 1.0.1
 - Se instala bien con `npx skills add dakexplica/dak-relevo-chat` (la 1.0.0 no la reconocía el instalador).
 

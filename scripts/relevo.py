@@ -166,6 +166,9 @@ def peso(carpeta):
         print("PESO: sin medir")
         return 0
     veces = round(actual / inicial, 1) if inicial else None
+    if veces is not None and (veces < 1.5 or actual - inicial < 30_000):
+        print(f"LIGERO: este chat todavía está ligero ({comun.miles(actual)} por respuesta, casi lo mismo que uno nuevo). "
+              "Es normal si acaba de empezar: el relevo conviene cuando un chat ya cargó mucho trabajo.")
     print(f"PESO: cada vez que respondo (o doy un paso) vuelvo a leer todo el chat: {comun.miles(actual)} tokens"
           + (f"; se ha compactado {comp} {'vez' if comp == 1 else 'veces'}" if comp else "") + ".")
     if inicial:

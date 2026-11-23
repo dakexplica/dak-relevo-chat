@@ -30,7 +30,7 @@ Usando la skill dak-relevo-chat, haz el relevo
 **Antes de empezar, guarda** en el json: `leccion: 2`, `pendiente: "leccion-3-en-chat-nuevo"`. Así el chat nuevo sabe que sigue la lección 3.
 
 **ACCIÓN:** haz el relevo completo como dice `SKILL.md` (pasos 1 a 6), con este chat como el trabajo:
-- La nota cuenta esta guía: "Guía de dak-relevo-chat con [nombre]. Usa Claude en [donde]; lo que le preocupa: [objetivo]. Hechas la lección 1 y 2. Siguiente paso exacto: seguir con `guia/leccion-3.md` de la skill dak-relevo-chat." Si la persona estaba trabajando en algo suyo en este chat, inclúyelo también: es su relevo real.
+- Si el chat está ligero (lo normal en la guía), dilo en media línea: "Aunque este chat está ligero, practicamos con él: así ves cómo pasa todo al chat nuevo." La nota cuenta esta guía: "Guía de dak-relevo-chat con [nombre]. Usa Claude en [donde]; lo que le preocupa: [objetivo]. Hechas la lección 1 y 2. Siguiente paso exacto: seguir con `guia/leccion-3.md` de la skill dak-relevo-chat." Si la persona estaba trabajando en algo suyo en este chat, inclúyelo también: es su relevo real.
 - Antes de escribir la nota, avisa en una línea: "Escribo la nota de relevo y abro el chat nuevo. Unos segundos."
 - Después, muéstrale la nota en un bloque corto (las secciones con 1 línea cada una), para que vea qué se lleva el chat nuevo.
 

@@ -149,8 +149,34 @@ def recordar_carpeta(carpeta, sesion, transcript):
 
 
 def chat_de_carpeta(carpeta):
+    """El chat que habló por última vez en esta carpeta. Si el medidor aún no lo registró (recién instalado),
+    lo busca en ~/.claude/projects: el transcript más reciente cuya carpeta de trabajo es esta."""
     try:
         with open(os.path.join(ESTADO, "carpetas.json")) as f:
-            return json.load(f).get(carpeta)
+            dato = json.load(f).get(carpeta)
+            if dato and os.path.exists(dato.get("transcript", "")):
+                return dato
     except (OSError, ValueError):
+        pass
+    raiz = os.path.join(CASA, ".claude", "projects")
+    clave = ('"cwd":' + json.dumps(carpeta, ensure_ascii=False)).encode()
+    clave2 = ('"cwd":' + json.dumps(carpeta)).encode()
+    mejor = None
+    try:
+        for d in os.listdir(raiz):
+            dd = os.path.join(raiz, d)
+            if not os.path.isdir(dd):
+                continue
+            for n in os.listdir(dd):
+                if not n.endswith(".jsonl"):
+                    continue
+                p = os.path.join(dd, n); t = os.path.getmtime(p)
+                if mejor and t <= mejor[0]:
+                    continue
+                with open(p, "rb") as f:
+                    cabeza = f.read(200_000)
+                if clave in cabeza or clave2 in cabeza:
+                    mejor = (t, p)
+    except OSError:
         return None
+    return {"transcript": mejor[1], "sesion": os.path.basename(mejor[1])[:-6], "t": mejor[0]} if mejor else None

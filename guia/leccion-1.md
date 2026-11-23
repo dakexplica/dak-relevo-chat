@@ -54,14 +54,16 @@ En claude.ai: sáltate este paso y di en una línea: "Aquí no hay avisos autom�
 
 **Antes, avisa:** "Ahora mido cuánto pesa este chat."
 
-**ACCIÓN:** `python3 <skill>/scripts/relevo.py peso "<carpeta>"`. (Si sale "sin medir" porque el medidor se acaba de instalar, explica que mide desde el siguiente mensaje y usa el número en la lección 2.) En claude.ai no hay número: explica la idea con palabras.
+**ACCIÓN:** `python3 <skill>/scripts/relevo.py peso "<carpeta>"` (encuentra este chat aunque el medidor se acabe de instalar). En claude.ai no hay número: explica la idea con palabras.
+
+**Si sale `LIGERO:`** (lo normal en la guía: la persona acaba de abrir el chat para instalarla), no lo escondas ni inventes números de este chat. Dilo tal cual y enséñale un **ejemplo real** de un chat pesado: *"Tu chat está ligero, es normal: acabas de empezar. Así se ve uno de verdad pesado: en un chat largo de trabajo, cada respuesta llegó a cargar ~397 mil tokens; uno nuevo arrancaba con ~145 mil, casi 3 veces menos (ejemplo real de quien hizo la skill)."*
 
 ## 4 · Lo que encontré (MENSAJE obligatorio que CIERRA el turno, sin botones)
 
 > **Listo, [nombre]. Esto pesa tu chat ahora mismo.**
 >
 > **Resultado**
-> - Cada vez que te respondo, vuelvo a leer todo este chat: **[peso actual]** tokens.
+> - Cada vez que te respondo, vuelvo a leer todo este chat: **[peso actual]** tokens. [Si salió LIGERO: "Tu chat está ligero porque acabamos de empezar; en uno largo de trabajo esto llega a cientos de miles" + el ejemplo real.]
 > - Un chat nuevo arrancaría con **[peso inicial]**.
 > - Lo que te preocupaba ([objetivo]): [cómo se conecta con ese número, en una frase: "por eso se te acaba el plan: cada mensaje paga todo lo anterior"].
 >
