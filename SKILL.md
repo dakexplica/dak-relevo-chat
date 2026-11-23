@@ -134,13 +134,16 @@ Sin herramienta de botones: la misma pregunta como **última línea de tu mensaj
 
 El medidor (`scripts/medidor.py`) mete en el contexto una línea que empieza con `[medidor dak-relevo-chat]`. La persona no la ve; es para ti. Tú decides **cuándo** decirlo, pero **siempre lo dices**:
 
+- **Decide como una persona, no con un número fijo.** Avisa cuando se juntan dos cosas: el chat ya va avanzado (≈45 % de su espacio, como la barra "Contexto" de la app) **y** cambiar ahorra de verdad en ESA cuenta: cada mensaje cuesta 3 veces o más que en un chat nuevo de esa misma persona (alguien con muchos conectores arranca pesado y le conviene más tarde; alguien ligero, antes). **Aprende de la persona:** cada «ahora no» hace que la siguiente vez espere más; cada «sí» lo regresa. Y un tope de seguridad: al 80 % (o si ya se compactó) avisa siempre, porque está por resumirse solo y perder detalle. Un chat que apenas empezó a trabajar no avisa.
+- **No lo ofrezcas por tu cuenta** si el medidor está instalado: él decide cuándo; tú, el momento exacto.
+- **Un relevo por fase, no varios para el mismo tema.** Si lo que sigue es parte de la misma tarea y aún cabe, espera a terminarla. El mejor momento: acabas de cerrar algo, o la persona cambia de tema o de fase.
 - **Nunca a media tarea.** Termina lo que estás haciendo.
 - **Al cerrar algo**, al final de esa respuesta, ofrécelo en UNA línea que **empiece con 🔄** (la marca es obligatoria: así el medidor sabe que ya lo ofreciste y deja de recordártelo). Si tienes botones o un cierre de turno con botones, úsalos: con los números dentro: *"🔄 Este chat ya está pesado: cada respuesta vuelve a leer ~300 mil tokens; uno nuevo arranca con ~60 mil. ¿Lo paso a un chat nuevo?"* · **Sí, pásalo a un chat nuevo** · **Ahora no**. Que quede claro a qué dice que sí: a pasar el trabajo a un chat nuevo sin perder nada.
 - **Si se te pasó**, el medidor te lo recuerda en el siguiente mensaje ("Sigue pendiente…"): ofrécelo en cuanto cierres algo.
 - **Una vez por aviso.** Si dice que no, no insistas: el medidor solo vuelve a avisar si el chat sube al siguiente nivel; ese segundo aviso dilo más claro.
 - Con el sí, sigue los pasos de arriba.
 
-Los niveles se ajustan en `~/.dakexplica/dak-relevo-chat.json`: `"aviso_1"` y `"aviso_2"` (tokens que creció el chat; por defecto 150000 y 300000) o `"medidor": false` para apagarlo.
+Todo se ajusta solo. Si alguien quiere tocarlo, en `~/.dakexplica/dak-relevo-chat.json`: `"aviso_1_pct"` (0.45), `"aviso_1_veces"` (3), `"aviso_2_pct"` (0.8), `"ventana"` (cuánto cabe; si no se pone, lo deduce: 200 mil o 1 millón), `"aprendido": {"paciencia": 0-4}` (lo que aprendió) o `"medidor": false` para apagarlo.
 
 ## Cuando aparece el aviso de arranque (automático)
 

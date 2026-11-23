@@ -2,7 +2,7 @@
 
 ¿Tus chats largos con Claude te gastan tokens, se ponen lentos o se le olvidan cosas? Es porque **cada vez que Claude responde vuelve a leer todo el chat**: entre más largo, más tokens gasta cada mensaje. Esta skill pasa tu trabajo a un **chat nuevo y limpio** sin perder el hilo: deja una nota de relevo corta (solo lo que importa), abre el chat nuevo y ese chat arranca sabiendo exactamente en qué ibas.
 
-- **Medidor:** te avisa solo cuando el chat ya pesa, con números ("cada respuesta vuelve a leer ~300 mil tokens; uno nuevo arranca con ~60 mil. ¿Lo paso a un chat nuevo?"), y nunca a media tarea.
+- **Medidor inteligente:** mide qué tan lleno está tu chat y cuánto ahorrarías en TU cuenta (según tus conectores), aprende de tus «ahora no» y te avisa solo cuando de verdad conviene: al cerrar algo, nunca a media tarea, con números ("cada respuesta vuelve a leer ~300 mil tokens; uno nuevo arranca con ~60 mil. ¿Lo paso a un chat nuevo?"), y nunca a media tarea.
 - **Arranque automático:** el chat nuevo recoge la nota solo, aunque lo abras a mano o uses `/clear`.
 - **Historial:** guarda las últimas 10 notas de cada proyecto. Pregunta «¿qué hicimos la vez pasada?».
 - En la app de escritorio abre el chat nuevo y te pregunta con botones si archiva el viejo.
@@ -50,7 +50,7 @@ La skill es gratis. Corre en tu compu y no usa internet. Al contrario: te **ahor
 
 ## ¿Algo falla?
 - **No me avisa solo:** dile a Claude «corre el Paso 0 del relevo» y acepta instalar los avisos.
-- **Me avisa muy pronto o muy tarde:** cambia `aviso_1` y `aviso_2` en `~/.dakexplica/dak-relevo-chat.json` (tokens; por defecto 150000 y 300000), o pon `"medidor": false` para apagarlo.
+- **Me avisa muy pronto o muy tarde:** dile «ahora no» cuando te lo ofrezca: aprende y la próxima vez espera más (y si dices que sí, sabe que iba bien). También se ajusta a mano en `~/.dakexplica/dak-relevo-chat.json`, o pon `"medidor": false` para apagarlo.
 - **Quitar los avisos:** `python3 ~/.claude/skills/dak-relevo-chat/scripts/relevo.py desinstalar`.
 - **Quiero la guía otra vez:** «ábreme la guía del relevo».
 

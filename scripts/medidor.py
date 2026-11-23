@@ -32,7 +32,7 @@ def ya_ofrecido(transcript, desde_byte):
         f.seek(desde_byte)
         nuevo = f.read()
     for linea in nuevo.split(b"\n"):
-        if MARCA not in linea:
+        if MARCA not in linea and b'\\ud83d\\udd04' not in linea:
             continue
         try:
             j = json.loads(linea)
@@ -60,34 +60,53 @@ def main():
     cfg = comun.leer_config()
     if cfg.get("medidor") is False:  # la persona lo apagó
         return
-    aviso1 = int(cfg.get("aviso_1") or comun.AVISO_1)
-    aviso2 = int(cfg.get("aviso_2") or comun.AVISO_2)
 
     inicial, actual, comp = comun.medir(ruta)
     if not inicial or not actual:
         return
     crecimiento = max(actual - inicial, 0)
+    cabe = comun.ventana(comun.maximo(ruta), cfg)
+    lleno = actual / cabe
+    # Cuántas veces más cuesta cada mensaje aquí que en un chat nuevo DE ESTA CUENTA
+    # (la base cambia mucho según los conectores y herramientas de cada quien).
+    veces = actual / inicial if inicial else 0
+    aprendido = cfg.get("aprendido") or {}
+    paciencia = int(aprendido.get("paciencia", 0))  # sube con cada «ahora no», baja con cada «sí»
+    p1 = min(float(cfg.get("aviso_1_pct") or comun.AVISO_1_PCT) + 0.08 * paciencia, 0.78)
+    v1 = float(cfg.get("aviso_1_veces") or comun.AVISO_1_VECES) + 0.5 * paciencia
+    p2 = float(cfg.get("aviso_2_pct") or comun.AVISO_2_PCT)
+    trabajo = crecimiento >= comun.MIN_CRECIMIENTO
     nivel = 0
-    if crecimiento >= aviso1 or comp >= 1:
-        nivel = 1
-    if crecimiento >= aviso2 or comp >= 2:
-        nivel = 2
+    if (trabajo and veces >= v1 and lleno >= p1) or comp >= 1:
+        nivel = 1  # ya conviene: cambiar ahorra de verdad y el chat va avanzado
+    if (trabajo and lleno >= p2) or comp >= 2:
+        nivel = 2  # tope: está por compactarse (resumirse solo y perder detalle)
 
     est = comun.estado_sesion(sesion)
     avisado = est.get("nivel", 0)
-    texto_persona = (entrada.get("prompt") or "").lower()
-    # La persona habló del relevo o contestó «ahora no» a una oferta: queda atendido.
-    pidio = "relevo" in texto_persona or "ahora no" in texto_persona or "chat nuevo" in texto_persona
+    texto_persona = (entrada.get("prompt") or "").lower().strip()
+    acepta = "relevo" in texto_persona or "chat nuevo" in texto_persona or texto_persona.startswith(("sí", "si,", "si ", "va", "dale", "ok"))
+    rechaza = any(f in texto_persona for f in ("ahora no", "todavía no", "todavia no", "aún no", "aun no", "después", "despues", "luego", "sigamos aquí", "sigamos aqui")) or texto_persona in ("no", "no.", "nop")
+    tam = os.path.getsize(ruta)
+    hubo_oferta = ya_ofrecido(ruta, max(tam - 150_000, 0))
 
-    if pidio and avisado:
+    # Aprende de la persona (una vez por oferta): «ahora no» = esperar más la próxima vez; «sí» = vas bien.
+    if hubo_oferta and (acepta or rechaza) and est.get("respondido") != est.get("nivel", -1):
+        paciencia = paciencia + 1 if rechaza and not acepta else max(paciencia - 1, 0)
+        aprendido["paciencia"] = min(paciencia, 4)
+        comun.guardar_config({"aprendido": aprendido})
+        est["respondido"] = est.get("nivel", -1)
+        est["ofrecido"] = True
+        comun.guardar_estado_sesion(sesion, est)
+
+    if (acepta or rechaza) and avisado:
         est["ofrecido"] = True
         comun.guardar_estado_sesion(sesion, est)
         return
 
     if nivel > avisado:
-        tam = os.path.getsize(ruta)
-        # Si Claude ya lo ofreció por su cuenta hace poco (o la persona ya contestó), no se repite.
-        ya = pidio or ya_ofrecido(ruta, max(tam - 400_000, 0))
+        # Si Claude ya lo ofreció hace poco (o la persona ya contestó), no se repite.
+        ya = acepta or rechaza or hubo_oferta
         est = {"nivel": nivel, "ofrecido": ya, "desde": tam}
         comun.guardar_estado_sesion(sesion, est)
         if ya:
@@ -96,14 +115,17 @@ def main():
             dato = (f"se ha compactado {comp} {'vez' if comp == 1 else 'veces'} "
                     f"(cada respuesta vuelve a leer {comun.miles(actual)} tokens)")
         else:
-            dato = (f"creció {comun.miles(crecimiento)} tokens desde que empezó "
-                    f"(cada respuesta vuelve a leer {comun.miles(actual)} tokens; uno nuevo arrancaría con {comun.miles(inicial)})")
-        fuerza = ("Ya está muy pesado: dilo con claridad y explica en una línea que aquí cada mensaje "
-                  "gasta varias veces más tokens que en un chat nuevo. " if nivel == 2 else "")
+            dato = (f"está {round(lleno * 100)} % lleno ({comun.miles(actual)} de {comun.miles(cabe)}): "
+                    f"cada respuesta vuelve a leer {comun.miles(actual)} tokens y uno nuevo de esta cuenta arrancaría con "
+                    f"{comun.miles(inicial)}, o sea {veces:.1f} veces menos")
+        fuerza = ("Ya está muy lleno y pronto se va a compactar (resumir solo y perder detalle): ofrécelo en "
+                  "cuanto cierres lo que estás haciendo, explicando en una línea que aquí cada mensaje gasta "
+                  "varias veces más tokens que en un chat nuevo. " if nivel == 2 else "")
         decir(
             f"[medidor dak-relevo-chat] Este chat ya {dato}. {fuerza}"
-            "No cortes lo que estás haciendo. Al TERMINAR esta respuesta (o la primera que cierre una "
-            "tarea), ofrece el relevo con la skill dak-relevo-chat en UNA línea que empiece con 🔄 "
+            "Con criterio: no cortes lo que estás haciendo, y si lo que sigue es parte de la MISMA tarea "
+            "(y aún cabe), espera a terminarla: un relevo por fase, no varios para el mismo tema. Cuando "
+            "cierres una tarea o fase (o la persona cambie de tema), ofrece el relevo con la skill dak-relevo-chat en UNA línea que empiece con 🔄 "
             "(la marca es obligatoria: así el medidor sabe que ya lo ofreciste). Si tienes una "
             "herramienta de botones o de cierre de turno con botones, úsala: «🔄 Este chat ya está pesado "
             "(cada respuesta vuelve a leer ~X tokens; uno nuevo arranca con ~Y). ¿Lo paso a un chat nuevo?» "

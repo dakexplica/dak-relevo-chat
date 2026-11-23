@@ -13,10 +13,21 @@ ESTADO = os.path.join(RELEVOS, ".medidor")
 CONFIG = os.path.join(CASA, ".dakexplica", "dak-relevo-chat.json")
 HISTORIAL_MAX = 10  # notas viejas que se guardan por proyecto
 
-# Niveles por defecto: cuánto creció el chat desde que empezó (tokens).
-# Cada persona los puede cambiar en su config ("aviso_1" / "aviso_2").
-AVISO_1 = 150_000
-AVISO_2 = 300_000
+# Niveles por defecto: qué tan lleno está el chat (como la barra "Contexto" de la app).
+# Nivel 1: el chat va avanzado Y cambiar ahorra de verdad en ESTA cuenta (según sus conectores).
+# Nivel 2: tope, está por compactarse. Lo que aprende de la persona («ahora no» / «sí») mueve el nivel 1.
+# Cada persona los puede cambiar en su config ("aviso_1_pct" / "aviso_2_pct" / "ventana").
+AVISO_1_PCT = 0.45   # además debe ahorrar de verdad (AVISO_1_VECES) y se ajusta con lo que aprende
+AVISO_1_VECES = 3.0  # cada mensaje cuesta 3 veces o más que en un chat nuevo de esta cuenta
+AVISO_2_PCT = 0.80   # tope de seguridad: está por compactarse
+MIN_CRECIMIENTO = 50_000  # un chat que arranca pesado no avisa hasta haber trabajado algo
+
+
+def ventana(maximo_visto, cfg):
+    """Cuánto cabe en el chat: lo que diga la config o, si no, se deduce (200 mil o 1 millón)."""
+    if cfg.get("ventana"):
+        return int(cfg["ventana"])
+    return 1_000_000 if maximo_visto and maximo_visto > 200_000 else 200_000
 
 
 def leer_config():
@@ -93,11 +104,17 @@ def medir(transcript):
     return inicial, actual, comp
 
 
+def maximo(transcript):
+    with open(transcript, "rb") as f:
+        return max((c for c in map(_contexto, f.read().split(b"\n")) if c), default=0)
+
+
 def miles(n):
     if not n:
         return "?"
     if n >= 1_000_000:
-        return f"~{n / 1_000_000:.1f} millones".replace(".0 ", " ")
+        m = round(n / 1_000_000, 1)
+        return "~1 millón" if m == 1 else f"~{m:g} millones"
     return f"~{round(n / 1000)} mil"
 
 
