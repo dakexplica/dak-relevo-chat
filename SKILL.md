@@ -37,6 +37,15 @@ Si faltan, explícalos en una frase cada uno y **pide permiso antes de instalar*
 - Frases que abren la guía siempre: «ábreme la guía del relevo», «empieza la guía» (si esta skill es la que se está usando), «retoma la guía» (donde se quedó, campo `leccion`), «guía lección 2», «sal de la guía».
 - **Antes de cada lección lee `guia/estilo.md`.** Cada lección es un guion para Claude (lo que dices, **ACCIÓN** y **ALTO**). Nunca sigas sin que la persona conteste.
 
+## Aviso de versión nueva (silencioso)
+
+Al empezar (junto con el Paso 0 o antes del relevo), corre **sin decir nada** `python3 <skill>/scripts/version.py`. Casi siempre no imprime nada y entonces **no digas ni una palabra del tema**: esta revisión no existe para la persona. Solo imprime si hay una versión más nueva en el repo oficial `dakexplica/dak-relevo-chat`, así: `NUEVA 1.1.0 | qué cambió`. Revisa como máximo una vez al día y, sin internet, se calla.
+
+Si imprimió una línea `NUEVA …`: haz primero el trabajo que te pidieron y, **al final de tu respuesta, en una sola línea**, avisa («Por cierto: hay una versión nueva de Relevo de chat (1.1.0: qué cambió). ¿La actualizo?») con botones **Sí, actualízala** / **Ahora no** (si no existe la herramienta de botones: «responde 1 o 2»).
+- **Sí:** dile en una frase qué vas a hacer y actualiza solo desde el repo oficial. Con Claude Code: `npx skills add dakexplica/dak-relevo-chat` (vuelve a instalar la última versión). Si eso no se puede o la instalaron con el .zip en la app de Claude: dile que descargue el `.zip` nuevo en github.com/dakexplica/dak-relevo-chat/releases y lo suba en Configuración → Capacidades → Skills. Nunca instales ni descargues otra cosa.
+- **Ahora no:** corre `python3 <skill>/scripts/version.py --omitir <versión>` y no vuelvas a mencionar esa versión (sí la siguiente).
+- **Nunca interrumpas una guía ni un relevo en curso con este aviso.** En un relevo, la pregunta de archivar va primero; el aviso de versión, si hay, en el chat nuevo o en el siguiente uso.
+
 ## Cuando te piden el relevo
 
 Si estás a media tarea, termina el paso que estás haciendo o déjalo en un punto de corte limpio (nada de archivos a medio editar). Luego todo de corrido, sin preguntar en cada paso: **la única pregunta es la de archivar, al final y con botones**.
@@ -139,3 +148,15 @@ Si al abrir un chat ves `[dak-relevo-chat] En esta carpeta hay una nota de relev
 
 - «¿En qué íbamos?» / «seguimos»: `python3 <skill>/scripts/relevo.py ruta "<carpeta>"` te dice dónde está la nota (sin tocar nada); léela y resume en 3-5 líneas.
 - «¿Qué hicimos la vez pasada / la semana pasada?»: `python3 <skill>/scripts/relevo.py historial "<carpeta>"` lista las últimas 10 notas; lee las que hagan falta.
+
+## Archivos de la skill
+
+| Archivo | Para qué |
+|---|---|
+| `scripts/relevo.py` | Paso 0, instalar/quitar los avisos, preparar la nota, medir el peso, historial |
+| `scripts/medidor.py` | Aviso automático cuando el chat ya pesa (insiste hasta que se ofrece con 🔄) |
+| `scripts/al_abrir.py` | Arranque automático: el chat nuevo recoge la nota solo |
+| `scripts/comun.py` | Piezas compartidas (nombre del proyecto, medir un chat, configuración) |
+| `scripts/version.py` | Aviso silencioso de versión nueva (solo habla si hay una; `--omitir X` = «ahora no») |
+| `version.json` · `CHANGELOG.md` | La versión instalada y qué cambió en cada una |
+| `guia/` | La mini guía: `estilo.md` + 3 lecciones |
