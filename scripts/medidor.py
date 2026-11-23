@@ -75,17 +75,23 @@ def main():
 
     est = comun.estado_sesion(sesion)
     avisado = est.get("nivel", 0)
-    pidio = "relevo" in (entrada.get("prompt") or "").lower()
+    texto_persona = (entrada.get("prompt") or "").lower()
+    # La persona habló del relevo o contestó «ahora no» a una oferta: queda atendido.
+    pidio = "relevo" in texto_persona or "ahora no" in texto_persona or "chat nuevo" in texto_persona
 
-    # La persona misma habló del relevo: el aviso pendiente queda atendido.
     if pidio and avisado:
         est["ofrecido"] = True
         comun.guardar_estado_sesion(sesion, est)
         return
 
     if nivel > avisado:
-        est = {"nivel": nivel, "ofrecido": False, "desde": os.path.getsize(ruta)}
+        tam = os.path.getsize(ruta)
+        # Si Claude ya lo ofreció por su cuenta hace poco (o la persona ya contestó), no se repite.
+        ya = pidio or ya_ofrecido(ruta, max(tam - 400_000, 0))
+        est = {"nivel": nivel, "ofrecido": ya, "desde": tam}
         comun.guardar_estado_sesion(sesion, est)
+        if ya:
+            return
         if comp:
             dato = (f"se ha compactado {comp} {'vez' if comp == 1 else 'veces'} "
                     f"(cada respuesta vuelve a leer {comun.miles(actual)} tokens)")
