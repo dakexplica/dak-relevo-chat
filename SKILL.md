@@ -27,7 +27,7 @@ Revisa Python y los dos avisos automáticos, que son **opcionales** (la skill fu
 Si faltan, explícalos en una frase cada uno y **pide permiso antes de instalar**: tocan la configuración de Claude Code (`~/.claude/settings.json`); se guarda un respaldo antes y se quitan con `relevo.py desinstalar`. Con su sí: `python3 <skill>/scripts/relevo.py instalar`. Funcionan desde el siguiente mensaje (el arranque automático, desde el siguiente chat). Si dice que no, sigue: la skill funciona igual cuando la pida. **En la app de Claude (claude.ai)** no hay avisos automáticos ni archivos: sáltate el Paso 0 y usa el modo "app de Claude" del paso 4.
 
 **La mini guía (solo se ofrece una vez).** Al empezar, revisa si `~/.dakexplica/dak-relevo-chat.json` tiene `"guia_ofrecida": true`:
-- **Si no**, es la primera vez (da igual cómo la instalaron, o si te pidieron un relevo directo). Antes de cualquier otra cosa, ofrécela **con botones y todo lo importante dentro de la pregunta** (en la app, el texto previo a un botón se resume):
+- **Si no**, es la primera vez. **Excepción (piensa como alguien nuevo): si te pidieron un relevo directo y su chat sí pesa, NO lo frenes con la guía:** haz el relevo primero y ofrece la guía al final, en el chat nuevo (en el brief: «al final de tu primer mensaje, ofrece la guía con botones»). En los demás casos (acaba de instalarla, la abre para conocerla, o su chat está ligero), antes de cualquier otra cosa ofrécela **con botones y todo lo importante dentro de la pregunta** (en la app, el texto previo a un botón se resume):
   - Pregunta: "Es la primera vez que usas Relevo de chat. ¿Quieres que te enseñe rápido a usarla y sacarle el mayor provecho? Son unos 5 min."
   - **Sí, enséñame (5 min)**: "3 pasos cortos: lo dejo listo, haces tu primer relevo y ves cómo te avisa solo"
   - **No, úsala directo**: "hago lo que me pediste; la guía la abres cuando quieras con «ábreme la guía del relevo»"
@@ -52,6 +52,10 @@ Si imprimió una línea `NUEVA …`: haz primero el trabajo que te pidieron y, *
 ## Cuando te piden el relevo
 
 Si estás a media tarea, termina el paso que estás haciendo o déjalo en un punto de corte limpio (nada de archivos a medio editar). Luego todo de corrido, sin preguntar en cada paso: **la única pregunta es la de archivar, al final y con botones**.
+
+### 0. ¿De verdad hace falta? (piensa como alguien nuevo)
+
+Corre `python3 <skill>/scripts/relevo.py peso "<carpeta>"`. Si sale `LIGERO:` y no estás en la guía, **no hagas el relevo a ciegas**: dilo con números y pregunta con botones: *"Tu chat todavía está ligero (~30 mil por respuesta, casi lo mismo que uno nuevo), así que ahorita no ahorras nada. ¿Lo hago igual para que veas cómo funciona?"* · **Sí, hazlo igual** · **No, cuando pese**. Si la persona insiste o quiere cambiar de tema en un chat limpio, hazlo.
 
 ### 1. Prepara
 
@@ -166,3 +170,16 @@ Si al abrir un chat ves `[dak-relevo-chat] En esta carpeta hay una nota de relev
 | `scripts/version.py` | Aviso silencioso de versión nueva (solo habla si hay una; `--omitir X` = «ahora no») |
 | `version.json` · `CHANGELOG.md` | La versión instalada y qué cambió en cada una |
 | `guia/` | La mini guía: `estilo.md` + 3 lecciones |
+
+## Situaciones de alguien nuevo (revisadas antes de publicar)
+
+| Situación | Qué hace la skill |
+|---|---|
+| La instala y abre la guía en un chat vacío | Mide su chat, dice que está ligero (normal) y enseña un ejemplo real de uno pesado; en el paso 2 avisa «ya sé que no está pesado, igual lo hacemos para que lo veas» y hace el relevo de práctica |
+| Pide un relevo la primera vez y su chat sí pesa | Hace el relevo primero; la guía se ofrece al final, en el chat nuevo |
+| Pide un relevo y su chat está ligero | Le dice con números que todavía no ahorra y pregunta si lo hace igual |
+| No da permiso para los avisos automáticos | Funciona cuando la pide; la guía le enseña a decir «relevo» |
+| Usa claude.ai (sin archivos) | Nota completa para copiar y pegar en un chat nuevo; sin avisos automáticos |
+| Usa la terminal | `/clear` y el chat nuevo recoge la nota solo (o pega una línea) |
+| Ventana de 1 millón pero aún no se sabe | El medidor no avisa antes de ~100 mil, y aprende de sus «ahora no» |
+| Sin internet | Todo funciona; el aviso de versión simplemente no dice nada |

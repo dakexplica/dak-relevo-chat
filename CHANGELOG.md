@@ -1,5 +1,11 @@
 # Qué cambió
 
+## 1.0.3
+- Si pides un relevo y tu chat todavía está ligero, te lo dice con números y te pregunta si lo hace igual.
+- La guía en un chat recién abierto: avisa «ya sé que no está pesado» y te enseña cómo funciona con un relevo de práctica.
+- Si pides un relevo la primera vez y tu chat sí pesa, lo hace primero; la guía se ofrece después.
+- El medidor no avisa antes de ~100 mil tokens.
+
 ## 1.0.2
 - Mide tu chat desde el primer momento, aunque los avisos se acaben de instalar.
 - Si tu chat todavía está ligero (por ejemplo, al hacer la guía en un chat nuevo), te lo dice tal cual y te enseña un ejemplo real de uno pesado.

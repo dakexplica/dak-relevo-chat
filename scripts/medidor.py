@@ -75,7 +75,7 @@ def main():
     p1 = min(float(cfg.get("aviso_1_pct") or comun.AVISO_1_PCT) + 0.08 * paciencia, 0.78)
     v1 = float(cfg.get("aviso_1_veces") or comun.AVISO_1_VECES) + 0.5 * paciencia
     p2 = float(cfg.get("aviso_2_pct") or comun.AVISO_2_PCT)
-    trabajo = crecimiento >= comun.MIN_CRECIMIENTO
+    trabajo = crecimiento >= comun.MIN_CRECIMIENTO and actual >= comun.MIN_ACTUAL
     nivel = 0
     if (trabajo and veces >= v1 and lleno >= p1) or comp >= 1:
         nivel = 1  # ya conviene: cambiar ahorra de verdad y el chat va avanzado

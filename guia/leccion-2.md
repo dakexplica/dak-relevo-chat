@@ -13,6 +13,8 @@ Cuando diga «sigue»:
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ```
 
+[Si en la lección 1 salió LIGERO, empieza con el anuncio, en una línea:] **"Ya sé que este chat apenas empieza y no está pesado; igual lo hacemos para que lo veas funcionando. Cuando un chat sí pese, es exactamente igual."**
+
 "Ahora lo más importante, [nombre]. El truco no es copiar la conversación (eso sería llevarte todo el peso). Es dejar una **nota de relevo** corta, solo con lo que vive en este chat: en qué vamos, qué decidimos, qué no funcionó y el siguiente paso. Lo demás (tu proyecto, sus archivos) el chat nuevo ya lo puede leer."
 
 "Pídemelo tú, una sola vez, para que veas lo fácil que es. Copia y pega esto:"

@@ -20,7 +20,7 @@ Cuando arranques (por el brief, por el aviso de arranque automático o porque pe
 > - Íbamos en la guía: hiciste la lección 1 y tu primer relevo.
 > - [Si en el chat anterior había trabajo suyo: en qué iba y su siguiente paso, en 1 línea.]
 >
-> Y este chat arrancó ligero: [peso inicial] en vez de [peso del chat viejo] (si lo tienes; si no, quita la línea).
+> [Si el chat viejo era pesado:] Y este chat arrancó ligero: [peso inicial] en vez de [peso del chat viejo]. [Si era ligero, en su lugar:] Como el otro chat estaba ligero, aquí no notas el ahorro; en un chat largo de trabajo es casi 3 veces menos por mensaje.
 
 Si el chat anterior sigue abierto (app de escritorio): una línea "El chat anterior sigue abierto; si quieres lo archivo desde aquí, dime «archívalo»."
 

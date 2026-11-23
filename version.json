@@ -1,6 +1,6 @@
 {
   "skill": "dak-relevo-chat",
   "repo": "dakexplica/dak-relevo-chat",
-  "version": "1.0.2",
-  "novedades": "La guía funciona bien aunque tu chat esté recién abierto, y mide tu chat desde el primer momento."
+  "version": "1.0.3",
+  "novedades": "Piensa como alguien nuevo: si tu chat aún está ligero te lo dice, la guía funciona en un chat vacío y no te frena con la guía si pides un relevo."
 }

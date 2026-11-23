@@ -21,6 +21,7 @@ AVISO_1_PCT = 0.45   # además debe ahorrar de verdad (AVISO_1_VECES) y se ajust
 AVISO_1_VECES = 3.0  # cada mensaje cuesta 3 veces o más que en un chat nuevo de esta cuenta
 AVISO_2_PCT = 0.80   # tope de seguridad: está por compactarse
 MIN_CRECIMIENTO = 50_000  # un chat que arranca pesado no avisa hasta haber trabajado algo
+MIN_ACTUAL = 100_000      # nunca avisa antes de ~100 mil (si aún no se sabe si la ventana es de 200 mil o de 1 millón)
 
 
 def ventana(maximo_visto, cfg):
