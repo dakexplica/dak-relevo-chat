@@ -32,6 +32,8 @@ def main():
         return                                   # sin version.json no hay nada que revisar
     if '--estado' in sys.argv:
         print(f"{local.get('skill')} {local.get('version')}"); return
+    if os.path.isdir(os.path.join(RAIZ, '.git')) and not os.environ.get('DAK_VERSION_URL'):
+        return                                   # copia del autor (es el repo): nunca se avisa ni se actualiza encima
     ruta = os.path.expanduser(f"~/.dakexplica/{local['skill']}.json")
     try:
         est = json.load(open(ruta, encoding='utf-8'))
@@ -44,7 +46,8 @@ def main():
     hoy = time.strftime('%Y-%m-%d')
     if est.get('ultima_revision') == hoy and '--forzar' not in sys.argv:
         return
-    url = os.environ.get('DAK_VERSION_URL') or f"https://raw.githubusercontent.com/{local['repo']}/main/version.json"
+    url = os.environ.get('DAK_VERSION_URL') or (
+        f"https://raw.githubusercontent.com/{local['repo']}/main/version.json?t={int(time.time())}")  # sin copia vieja de GitHub
     try:
         with urllib.request.urlopen(url, timeout=3) as r:
             remoto = json.loads(r.read().decode('utf-8'))
