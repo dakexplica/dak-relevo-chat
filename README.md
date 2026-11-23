@@ -1,8 +1,8 @@
 # Relevo de chat · dak-relevo-chat
 
-¿Tu chat con Claude se pone lento, se le olvidan cosas o se te acaba el plan? Es porque **cada mensaje vuelve a leer todo el chat**. Esta skill pasa tu trabajo a un **chat nuevo y limpio** sin perder el hilo: deja una nota de relevo corta (solo lo que importa), abre el chat nuevo y ese chat arranca sabiendo exactamente en qué ibas.
+¿Tus chats largos con Claude te gastan tokens, se ponen lentos o se le olvidan cosas? Es porque **cada vez que Claude responde vuelve a leer todo el chat**: entre más largo, más tokens gasta cada mensaje. Esta skill pasa tu trabajo a un **chat nuevo y limpio** sin perder el hilo: deja una nota de relevo corta (solo lo que importa), abre el chat nuevo y ese chat arranca sabiendo exactamente en qué ibas.
 
-- **Medidor:** te avisa solo cuando el chat ya pesa, con números ("este chat carga ~300 mil tokens en cada mensaje; uno nuevo arranca con ~60 mil"), y nunca a media tarea.
+- **Medidor:** te avisa solo cuando el chat ya pesa, con números ("cada respuesta vuelve a leer ~300 mil tokens; uno nuevo arranca con ~60 mil. ¿Lo paso a un chat nuevo?"), y nunca a media tarea.
 - **Arranque automático:** el chat nuevo recoge la nota solo, aunque lo abras a mano o uses `/clear`.
 - **Historial:** guarda las últimas 10 notas de cada proyecto. Pregunta «¿qué hicimos la vez pasada?».
 - En la app de escritorio abre el chat nuevo y te pregunta con botones si archiva el viejo.

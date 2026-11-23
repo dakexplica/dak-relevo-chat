@@ -42,7 +42,7 @@ Según `donde`:
 ## 3 · Cierre (en la app de escritorio, con la pregunta de archivar)
 
 **App de escritorio:** el mensaje de cierre, corto, **antes** de los botones de archivar no sirve (se resume): mete todo dentro de la pregunta de archivar (paso 5 de `SKILL.md`):
-"Listo, [nombre]: el chat nuevo «[título]» ya arrancó con la nota y ahí sigue el paso 3. Este chat carga [peso actual] tokens por mensaje; el nuevo arranca con [peso inicial]. ¿Archivo este?" · **Sí, archívalo** · **Déjalo abierto**. Con la respuesta, haz lo que dice el paso 5 (el cierre de 2-3 líneas va antes de archivar).
+"Listo, [nombre]: el chat nuevo «[título]» ya arrancó con la nota y ahí sigue el paso 3. Aquí cada respuesta vuelve a leer [peso actual] tokens; el nuevo arranca con [peso inicial]. ¿Archivo este?" · **Sí, archívalo** · **Déjalo abierto**. Con la respuesta, haz lo que dice el paso 5 (el cierre de 2-3 líneas va antes de archivar).
 
 **Terminal y claude.ai:** cierra con:
 > **Lo que lograste**

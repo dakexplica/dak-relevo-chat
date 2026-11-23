@@ -88,19 +88,20 @@ def main():
         comun.guardar_estado_sesion(sesion, est)
         if comp:
             dato = (f"se ha compactado {comp} {'vez' if comp == 1 else 'veces'} "
-                    f"(cada mensaje carga {comun.miles(actual)} tokens)")
+                    f"(cada respuesta vuelve a leer {comun.miles(actual)} tokens)")
         else:
             dato = (f"creció {comun.miles(crecimiento)} tokens desde que empezó "
-                    f"(cada mensaje carga {comun.miles(actual)}; uno nuevo arrancaría con {comun.miles(inicial)})")
+                    f"(cada respuesta vuelve a leer {comun.miles(actual)} tokens; uno nuevo arrancaría con {comun.miles(inicial)})")
         fuerza = ("Ya está muy pesado: dilo con claridad y explica en una línea que aquí cada mensaje "
-                  "cuesta varias veces más que en un chat nuevo. " if nivel == 2 else "")
+                  "gasta varias veces más tokens que en un chat nuevo. " if nivel == 2 else "")
         decir(
             f"[medidor dak-relevo-chat] Este chat ya {dato}. {fuerza}"
             "No cortes lo que estás haciendo. Al TERMINAR esta respuesta (o la primera que cierre una "
             "tarea), ofrece el relevo con la skill dak-relevo-chat en UNA línea que empiece con 🔄 "
             "(la marca es obligatoria: así el medidor sabe que ya lo ofreciste). Si tienes una "
-            "herramienta de botones o de cierre de turno con botones, úsala: «🔄 ¿Hago el relevo a un "
-            "chat nuevo?» con «Sí, haz el relevo» / «Ahora no». Una sola vez por aviso."
+            "herramienta de botones o de cierre de turno con botones, úsala: «🔄 Este chat ya está pesado "
+            "(cada respuesta vuelve a leer ~X tokens; uno nuevo arranca con ~Y). ¿Lo paso a un chat nuevo?» "
+            "con «Sí, pásalo a un chat nuevo» / «Ahora no». Di los números: es lo que convence. Una sola vez por aviso."
         )
         return
 
@@ -111,7 +112,7 @@ def main():
             return
         decir(
             "[medidor dak-relevo-chat] Sigue pendiente ofrecer el relevo (no se ha ofrecido). "
-            f"El chat carga {comun.miles(actual)} tokens por mensaje. Si esta respuesta cierra algo, "
+            f"Cada respuesta vuelve a leer {comun.miles(actual)} tokens. Si esta respuesta cierra algo, "
             "termina con la línea 🔄 (o los botones) ofreciéndolo; si estás a media tarea, al acabarla."
         )
 

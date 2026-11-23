@@ -1,6 +1,6 @@
 ---
 name: dak-relevo-chat
-description: Pasa el trabajo de un chat pesado a un chat NUEVO y limpio sin perder el hilo. Escribe una nota de relevo corta (solo lo que vive en este chat), guarda lo duradero en el archivo de estado del proyecto, abre el chat nuevo desde cero (nunca copiando la conversación) y ofrece archivar el viejo con botones. Trae un medidor que te avisa solo cuando el chat ya pesa (con números: cuánto carga cada mensaje y cuánto más ligero arranca uno nuevo) y un arranque automático: el chat nuevo recoge la nota solo, aunque lo abras a mano o uses /clear. Guarda las últimas 10 notas de cada proyecto. Incluye una mini guía interactiva de ~5 min. Úsala cuando digan /dak-relevo-chat, "relevo", "hagamos relevo", "cambiemos de chat", "pásalo a un chat nuevo", "abre otro chat y seguimos", "este chat ya está pesado/lento/muy largo", "Claude ya está lento o se le olvidan cosas", "hazme un resumen para seguir en otro chat", "¿en qué íbamos?", "¿qué hicimos la vez pasada?", "guía del relevo", aunque no nombren la skill. También cuando aparezca en el contexto un aviso "[medidor dak-relevo-chat]" o "[dak-relevo-chat]": ahí la skill dice cómo y cuándo actuar.
+description: Pasa el trabajo de un chat pesado a un chat NUEVO y limpio sin perder el hilo. Escribe una nota de relevo corta (solo lo que vive en este chat), guarda lo duradero en el archivo de estado del proyecto, abre el chat nuevo desde cero (nunca copiando la conversación) y ofrece archivar el viejo con botones. Trae un medidor que te avisa solo cuando el chat ya pesa (con números: cuántos tokens vuelve a leer cada respuesta, cuántos lleva el chat y cuánto menos gasta uno nuevo) y un arranque automático: el chat nuevo recoge la nota solo, aunque lo abras a mano o uses /clear. Guarda las últimas 10 notas de cada proyecto. Incluye una mini guía interactiva de ~5 min. Úsala cuando digan /dak-relevo-chat, "relevo", "hagamos relevo", "cambiemos de chat", "pásalo a un chat nuevo", "abre otro chat y seguimos", "este chat ya está pesado/lento/muy largo", "Claude ya está lento o se le olvidan cosas", "hazme un resumen para seguir en otro chat", "¿en qué íbamos?", "¿qué hicimos la vez pasada?", "guía del relevo", aunque no nombren la skill. También cuando aparezca en el contexto un aviso "[medidor dak-relevo-chat]" o "[dak-relevo-chat]": ahí la skill dice cómo y cuándo actuar.
 ---
 
 # dak-relevo-chat
@@ -58,7 +58,7 @@ Si estás a media tarea, termina el paso que estás haciendo o déjalo en un pun
 python3 <skill>/scripts/relevo.py preparar "<carpeta>"
 ```
 
-Te dice: `NOTA:` dónde va la nota (una por proyecto, en `~/.claude/relevos/<proyecto>.md`, fuera del proyecto a propósito: no se cuela en git), `ANTERIOR:` si ya había una (la copia sola al historial, las últimas 10 por proyecto) y `PESO:` cuánto carga este chat y con cuánto arranca uno nuevo. Guarda esos números para el cierre.
+Te dice: `NOTA:` dónde va la nota (una por proyecto, en `~/.claude/relevos/<proyecto>.md`, fuera del proyecto a propósito: no se cuela en git), `ANTERIOR:` si ya había una (la copia sola al historial, las últimas 10 por proyecto) `PESO:` cuántos tokens vuelve a leer cada respuesta, `TOTAL:` cuántos lleva leídos el chat y `NUEVO:` con cuántos arranca uno nuevo. Guarda esos números para el cierre.
 
 ### 2. Escribe la nota
 
@@ -118,7 +118,7 @@ Si la app se niega a abrirlo (pasa cuando el turno lo empezó un aviso automáti
 
 **Siempre con botones, nunca como frase suelta al final** (una frase suelta se pierde entre los avisos de la app). Pregunta con todo el contexto dentro de la pregunta:
 
-> "Ya abrí el chat nuevo «<título>» con la nota. ¿Archivo este? Si se queda abierto, cada vez que lo abras vuelve a cargar <peso> tokens."
+> "Ya abrí el chat nuevo «<título>» con la nota. ¿Archivo este? Si se queda abierto, cada vez que lo abras y le escribas vuelve a leer <peso> tokens."
 > **Sí, archívalo** · **Déjalo abierto**
 
 Sin herramienta de botones: la misma pregunta como **última línea de tu mensaje**, con "responde 1 o 2".
@@ -128,14 +128,14 @@ Sin herramienta de botones: la misma pregunta como **última línea de tu mensaj
 
 ### 6. Cierra corto
 
-3-4 líneas: el link al chat nuevo (o qué hacer en la terminal), dónde quedó la nota, si se actualizó el archivo de estado, y el número del paso 1: *"Este chat cargaba ~410 mil tokens en cada mensaje; el nuevo arranca con ~150 mil."* Nada más: cada palabra extra en este chat cuesta.
+3-4 líneas: el link al chat nuevo (o qué hacer en la terminal), dónde quedó la nota, si se actualizó el archivo de estado, y el número del paso 1: *"Este chat ya llevaba ~107 millones de tokens leídos y cada respuesta volvía a leer ~435 mil; el nuevo arranca con ~150 mil: casi 3 veces menos."* Nada más: cada palabra extra en este chat cuesta.
 
 ## Cuando aparece el aviso del medidor (automático)
 
 El medidor (`scripts/medidor.py`) mete en el contexto una línea que empieza con `[medidor dak-relevo-chat]`. La persona no la ve; es para ti. Tú decides **cuándo** decirlo, pero **siempre lo dices**:
 
 - **Nunca a media tarea.** Termina lo que estás haciendo.
-- **Al cerrar algo**, al final de esa respuesta, ofrécelo en UNA línea que **empiece con 🔄** (la marca es obligatoria: así el medidor sabe que ya lo ofreciste y deja de recordártelo). Si tienes botones o un cierre de turno con botones, úsalos: «🔄 ¿Hago el relevo a un chat nuevo?» · **Sí, haz el relevo** · **Ahora no**, con el número dentro: *"🔄 Este chat ya carga ~300 mil tokens en cada mensaje; uno nuevo arranca con ~60 mil. ¿Hago el relevo?"*
+- **Al cerrar algo**, al final de esa respuesta, ofrécelo en UNA línea que **empiece con 🔄** (la marca es obligatoria: así el medidor sabe que ya lo ofreciste y deja de recordártelo). Si tienes botones o un cierre de turno con botones, úsalos: con los números dentro: *"🔄 Este chat ya está pesado: cada respuesta vuelve a leer ~300 mil tokens; uno nuevo arranca con ~60 mil. ¿Lo paso a un chat nuevo?"* · **Sí, pásalo a un chat nuevo** · **Ahora no**. Que quede claro a qué dice que sí: a pasar el trabajo a un chat nuevo sin perder nada.
 - **Si se te pasó**, el medidor te lo recuerda en el siguiente mensaje ("Sigue pendiente…"): ofrécelo en cuanto cierres algo.
 - **Una vez por aviso.** Si dice que no, no insistas: el medidor solo vuelve a avisar si el chat sube al siguiente nivel; ese segundo aviso dilo más claro.
 - Con el sí, sigue los pasos de arriba.

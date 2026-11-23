@@ -35,7 +35,7 @@ Con el «sigue»:
 > **Para que nunca tengas que acordarte:**
 > - El **medidor** mide en silencio cada mensaje. Cuando el chat ya pesa, al terminar lo que estemos haciendo (nunca a media tarea) te escribo una línea así:
 >
->   🔄 *Este chat ya carga ~300 mil tokens en cada mensaje; uno nuevo arranca con ~60 mil. ¿Hago el relevo?*
+>   🔄 *Este chat ya está pesado: cada respuesta vuelve a leer ~300 mil tokens; uno nuevo arranca con ~60 mil. ¿Lo paso a un chat nuevo?*
 >
 >   Dices que sí y hago todo lo que viste. Si dices que no, no insisto.
 > - Cada nota se guarda: las últimas 10 de cada proyecto. Pregúntame «¿qué hicimos la vez pasada?» y te lo cuento.

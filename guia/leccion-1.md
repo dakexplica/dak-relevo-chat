@@ -61,7 +61,8 @@ En claude.ai: sáltate este paso y di en una línea: "Aquí no hay avisos autom�
 > **Listo, [nombre]. Esto pesa tu chat ahora mismo.**
 >
 > **Resultado**
-> - Cada mensaje que me mandas, vuelvo a leer **[peso actual]** tokens antes de contestar.
+> - Cada vez que te respondo, vuelvo a leer todo este chat: **[peso actual]** tokens.
+> - En total, este chat ya lleva **[total]** tokens leídos.
 > - Un chat nuevo arrancaría con **[peso inicial]**.
 > - Lo que te preocupaba ([objetivo]): [cómo se conecta con ese número, en una frase: "por eso se te acaba el plan: cada mensaje paga todo lo anterior"].
 >

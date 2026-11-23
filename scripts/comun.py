@@ -93,8 +93,32 @@ def medir(transcript):
     return inicial, actual, comp
 
 
+def total_leido(transcript):
+    """Todos los tokens que Claude ha vuelto a leer en este chat (suma de cada respuesta o paso)."""
+    vistos = {}
+    with open(transcript, "rb") as f:
+        for linea in f:
+            if b'"usage"' not in linea or b'"assistant"' not in linea:
+                continue
+            try:
+                j = json.loads(linea)
+            except ValueError:
+                continue
+            if j.get("type") != "assistant" or j.get("isSidechain"):
+                continue
+            msg = j.get("message") or {}
+            c = _contexto(linea)
+            if c:
+                vistos[msg.get("id") or len(vistos)] = c
+    return sum(vistos.values())
+
+
 def miles(n):
-    return f"~{round(n / 1000)} mil" if n else "?"
+    if not n:
+        return "?"
+    if n >= 1_000_000:
+        return f"~{n / 1_000_000:.1f} millones".replace(".0 ", " ")
+    return f"~{round(n / 1000)} mil"
 
 
 def estado_sesion(sesion):
