@@ -1,6 +1,6 @@
 ---
 name: dak-relevo-chat
-description: Pasa el trabajo de un chat pesado a un chat NUEVO y limpio sin perder el hilo. Escribe una nota de relevo corta (solo lo que vive en este chat), guarda lo duradero en el archivo de estado del proyecto, abre el chat nuevo desde cero (nunca copiando la conversación) y ofrece archivar el viejo con botones. Trae un medidor que te avisa solo cuando el chat ya pesa (con números: cuántos tokens vuelve a leer cada respuesta, cuántos lleva el chat y cuánto menos gasta uno nuevo) y un arranque automático: el chat nuevo recoge la nota solo, aunque lo abras a mano o uses /clear. Guarda las últimas 10 notas de cada proyecto. Incluye una mini guía interactiva de ~5 min. Úsala cuando digan /dak-relevo-chat, "relevo", "hagamos relevo", "cambiemos de chat", "pásalo a un chat nuevo", "abre otro chat y seguimos", "este chat ya está pesado/lento/muy largo", "Claude ya está lento o se le olvidan cosas", "hazme un resumen para seguir en otro chat", "¿en qué íbamos?", "¿qué hicimos la vez pasada?", "guía del relevo", aunque no nombren la skill. También cuando aparezca en el contexto un aviso "[medidor dak-relevo-chat]" o "[dak-relevo-chat]": ahí la skill dice cómo y cuándo actuar.
+description: Pasa el trabajo de un chat pesado a un chat NUEVO y limpio sin perder el hilo. Escribe una nota de relevo corta (solo lo que vive en este chat), guarda lo duradero en el archivo de estado del proyecto, abre el chat nuevo desde cero (nunca copiando la conversación) y ofrece archivar el viejo con botones. Trae un medidor que te avisa solo cuando el chat ya pesa (con números: cuántos tokens vuelve a leer cada respuesta y cuánto menos gasta uno nuevo) y un arranque automático: el chat nuevo recoge la nota solo, aunque lo abras a mano o uses /clear. Guarda las últimas 10 notas de cada proyecto. Incluye una mini guía interactiva de ~5 min. Úsala cuando digan /dak-relevo-chat, "relevo", "hagamos relevo", "cambiemos de chat", "pásalo a un chat nuevo", "abre otro chat y seguimos", "este chat ya está pesado/lento/muy largo", "Claude ya está lento o se le olvidan cosas", "hazme un resumen para seguir en otro chat", "¿en qué íbamos?", "¿qué hicimos la vez pasada?", "guía del relevo", aunque no nombren la skill. También cuando aparezca en el contexto un aviso "[medidor dak-relevo-chat]" o "[dak-relevo-chat]": ahí la skill dice cómo y cuándo actuar.
 ---
 
 # dak-relevo-chat
@@ -58,7 +58,7 @@ Si estás a media tarea, termina el paso que estás haciendo o déjalo en un pun
 python3 <skill>/scripts/relevo.py preparar "<carpeta>"
 ```
 
-Te dice: `NOTA:` dónde va la nota (una por proyecto, en `~/.claude/relevos/<proyecto>.md`, fuera del proyecto a propósito: no se cuela en git), `ANTERIOR:` si ya había una (la copia sola al historial, las últimas 10 por proyecto) `PESO:` cuántos tokens vuelve a leer cada respuesta, `TOTAL:` cuántos lleva leídos el chat y `NUEVO:` con cuántos arranca uno nuevo. Guarda esos números para el cierre.
+Te dice: `NOTA:` dónde va la nota (una por proyecto, en `~/.claude/relevos/<proyecto>.md`, fuera del proyecto a propósito: no se cuela en git), `ANTERIOR:` si ya había una (la copia sola al historial, las últimas 10 por proyecto) `PESO:` cuántos tokens vuelve a leer cada respuesta y `NUEVO:` con cuántos arranca uno nuevo. Guarda esos números para el cierre.
 
 ### 2. Escribe la nota
 
@@ -128,7 +128,7 @@ Sin herramienta de botones: la misma pregunta como **última línea de tu mensaj
 
 ### 6. Cierra corto
 
-3-4 líneas: el link al chat nuevo (o qué hacer en la terminal), dónde quedó la nota, si se actualizó el archivo de estado, y el número del paso 1: *"Este chat ya llevaba ~107 millones de tokens leídos y cada respuesta volvía a leer ~435 mil; el nuevo arranca con ~150 mil: casi 3 veces menos."* Nada más: cada palabra extra en este chat cuesta.
+3-4 líneas: el link al chat nuevo (o qué hacer en la terminal), dónde quedó la nota, si se actualizó el archivo de estado, y el número del paso 1: *"Aquí cada respuesta volvía a leer ~435 mil tokens; el nuevo arranca con ~150 mil: casi 3 veces menos."* Nada más: cada palabra extra en este chat cuesta.
 
 ## Cuando aparece el aviso del medidor (automático)
 
