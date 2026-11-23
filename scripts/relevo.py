@@ -21,6 +21,25 @@ AQUI = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, AQUI)
 import comun  # noqa: E402
 
+import atexit as _atexit
+
+
+def _aviso_version():
+    """Al terminar, revisa en silencio si hay versión nueva de la skill (máx. 1 vez al día)."""
+    try:
+        import importlib.util, os as _os
+        ruta = _os.path.join(_os.path.dirname(_os.path.abspath(__file__)), "version.py")
+        spec = importlib.util.spec_from_file_location("dak_version", ruta)
+        modulo = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(modulo)
+        modulo.avisar()
+    except Exception:
+        pass
+
+
+_atexit.register(_aviso_version)
+
+
 SETTINGS = os.path.join(comun.CASA, ".claude", "settings.json")
 HOOKS = {
     "UserPromptSubmit": os.path.join(AQUI, "medidor.py"),
