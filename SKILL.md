@@ -121,7 +121,7 @@ Si la app se niega a abrirlo (pasa cuando el turno lo empezó un aviso automáti
 
 Sin herramienta de botones: la misma pregunta como **última línea de tu mensaje**, con "responde 1 o 2".
 
-- **Sí:** primero escribe el cierre (paso 6, porque al archivar este chat ya no puedes escribir), luego `archive_session` con `"self"`.
+- **Sí:** primero escribe el cierre (paso 6, porque al archivar este chat ya no puedes escribir), luego `archive_session` con `"self"`. Si la app te pide repetir la llamada con el campo `session` que ella misma te da, repítela una vez exactamente así.
 - **Déjalo abierto:** el cierre y listo.
 
 ### 6. Cierra corto
